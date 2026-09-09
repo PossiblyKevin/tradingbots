@@ -4,519 +4,61 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Toobit Preset Bot Ranker & Squeeze Guardian</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
-  
-  <style>
-    :root {
-      /* Soft ambient background */
-      --bg: #fafbff;
-      --card-bg: #ffffff;
-      
-      /* Vibrant primary indigo palette */
-      --primary: #4338ca;
-      --primary-hover: #3730a3;
-      --primary-gradient: linear-gradient(135deg, #4f46e5 0%, #2563eb 100%);
-      --text-main: #0f172a;
-      --text-muted: #64748b;
-      --border-subtle: rgba(226, 232, 240, 0.8);
-
-      /* Pill & Floaty Shadows */
-      --shadow-nav: 0 10px 25px -5px rgba(99, 102, 241, 0.08), 0 4px 10px -2px rgba(0, 0, 0, 0.03);
-      --shadow-float: 0 16px 36px -8px rgba(100, 116, 139, 0.08), 0 4px 16px -2px rgba(100, 116, 139, 0.03);
-      --shadow-hover: 0 24px 48px -10px rgba(99, 102, 241, 0.14), 0 8px 24px -4px rgba(0, 0, 0, 0.04);
-      
-      /* Accents */
-      --green-soft: #10b981;
-      --green-bg: #ecfdf5;
-      --red-soft: #f43f5e;
-      --red-bg: #fff1f2;
-      --orange-soft: #f59e0b;
-      --orange-bg: #fffbeb;
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
-      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-      background-color: var(--bg);
-      /* Dreamy gradient glows inspired by the screenshot */
-      background-image: 
-        radial-gradient(circle at 10% 12%, rgba(244, 114, 182, 0.12) 0%, transparent 42%),
-        radial-gradient(circle at 90% 18%, rgba(96, 165, 250, 0.14) 0%, transparent 40%),
-        radial-gradient(circle at 50% 85%, rgba(167, 139, 250, 0.12) 0%, transparent 50%);
-      background-attachment: fixed;
-      color: var(--text-main);
-      padding: 24px 20px 80px;
-      min-height: 100vh;
-      -webkit-font-smoothing: antialiased;
-    }
-
-    .container {
-      max-width: 1240px;
-      margin: 0 auto;
-    }
-
-    /* Floating Island Nav (Schedule HQ style) */
-    .top-nav {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      background: rgba(255, 255, 255, 0.85);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
-      border: 1px solid rgba(255, 255, 255, 0.9);
-      box-shadow: var(--shadow-nav);
-      border-radius: 9999px;
-      padding: 8px 14px 8px 20px;
-      max-width: 680px;
-      margin: 0 auto 52px;
-    }
-
-    .nav-brand {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-weight: 800;
-      font-size: 15px;
-      letter-spacing: -0.01em;
-      color: var(--text-main);
-    }
-
-    .brand-icon {
-      background: var(--primary-gradient);
-      color: #fff;
-      font-weight: 800;
-      font-size: 11px;
-      padding: 5px 8px;
-      border-radius: 8px;
-      letter-spacing: 0.05em;
-    }
-
-    .nav-actions {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-    }
-
-    .nav-link {
-      font-size: 13.5px;
-      font-weight: 600;
-      color: var(--text-muted);
-      text-decoration: none;
-      transition: color 0.2s;
-    }
-
-    .nav-link:hover {
-      color: var(--text-main);
-    }
-
-    .btn-pill-primary {
-      background: var(--primary-gradient);
-      color: #fff;
-      font-weight: 700;
-      font-size: 13.5px;
-      padding: 9px 20px;
-      border-radius: 9999px;
-      border: none;
-      cursor: pointer;
-      box-shadow: 0 6px 18px rgba(79, 70, 229, 0.25);
-      transition: transform 0.2s, box-shadow 0.2s;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .btn-pill-primary:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 8px 22px rgba(79, 70, 229, 0.35);
-    }
-
-    /* Hero Section */
-    .hero {
-      text-align: center;
-      max-width: 780px;
-      margin: 0 auto 48px;
-    }
-
-    .hero-badge {
-      display: inline-block;
-      background: rgba(255, 255, 255, 0.85);
-      backdrop-filter: blur(8px);
-      border: 1px solid rgba(226, 232, 240, 0.7);
-      padding: 6px 16px;
-      border-radius: 9999px;
-      font-size: 12.5px;
-      font-weight: 600;
-      color: var(--text-muted);
-      margin-bottom: 24px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.02);
-    }
-
-    .hero h1 {
-      font-size: clamp(34px, 5vw, 54px);
-      font-weight: 800;
-      line-height: 1.15;
-      letter-spacing: -0.035em;
-      margin-bottom: 14px;
-      color: #0f172a;
-    }
-
-    .hero h1 .gradient-text {
-      background: linear-gradient(135deg, #4f46e5 0%, #2563eb 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    .hero p {
-      font-size: 16px;
-      line-height: 1.6;
-      color: var(--text-muted);
-      max-width: 620px;
-      margin: 0 auto;
-    }
-
-    /* Controls Panel */
-    .controls-panel {
-      background: rgba(255, 255, 255, 0.9);
-      backdrop-filter: blur(12px);
-      border: 1px solid rgba(255, 255, 255, 0.95);
-      border-radius: 28px;
-      padding: 24px 28px;
-      box-shadow: var(--shadow-float);
-      margin-bottom: 40px;
-    }
-
-    .input-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
-      margin-bottom: 18px;
-    }
-
-    @media (max-width: 768px) {
-      .input-grid { grid-template-columns: 1fr; }
-    }
-
-    input[type="text"] {
-      width: 100%;
-      background: #f8fafc;
-      border: 1.5px solid #edf2f7;
-      border-radius: 18px;
-      padding: 14px 18px;
-      font-size: 13.5px;
-      color: var(--text-main);
-      font-family: 'JetBrains Mono', monospace;
-      outline: none;
-      transition: all 0.25s ease;
-    }
-
-    input[type="text"]:focus {
-      background: #ffffff;
-      border-color: #6366f1;
-      box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
-    }
-
-    input[type="text"]::placeholder {
-      color: #94a3b8;
-      font-family: 'Plus Jakarta Sans', sans-serif;
-    }
-
-    .actions-flex {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 16px;
-      padding-top: 6px;
-    }
-
-    .btn-sync {
-      background: #0f172a;
-      color: #ffffff;
-      border: none;
-      padding: 12px 24px;
-      border-radius: 9999px;
-      font-size: 14px;
-      font-weight: 700;
-      cursor: pointer;
-      box-shadow: 0 6px 16px rgba(15, 23, 42, 0.12);
-      transition: all 0.2s;
-    }
-
-    .btn-sync:hover {
-      background: #1e293b;
-      transform: translateY(-1px);
-    }
-
-    /* Soft Switch Component */
-    .toggle-label {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-size: 14px;
-      font-weight: 600;
-      color: var(--text-main);
-      cursor: pointer;
-    }
-
-    .switch-ui {
-      width: 44px;
-      height: 24px;
-      background: #e2e8f0;
-      border-radius: 9999px;
-      position: relative;
-      transition: 0.2s;
-    }
-
-    .switch-ui::before {
-      content: "";
-      position: absolute;
-      top: 3px;
-      left: 3px;
-      width: 18px;
-      height: 18px;
-      background: #fff;
-      border-radius: 50%;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-      transition: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    input[type="checkbox"]:checked + .switch-ui {
-      background: #4f46e5;
-    }
-
-    input[type="checkbox"]:checked + .switch-ui::before {
-      transform: translateX(20px);
-    }
-
-    .status-row {
-      margin-top: 18px;
-      padding-top: 14px;
-      border-top: 1px solid #f1f5f9;
-      display: flex;
-      justify-content: space-between;
-      font-size: 13px;
-      color: var(--text-muted);
-      font-weight: 500;
-    }
-
-    /* Cards Grid */
-    .bot-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
-      gap: 24px;
-    }
-
-    /* Floaty Cards */
-    .bot-card {
-      background: var(--card-bg);
-      border-radius: 28px;
-      padding: 24px;
-      border: 1px solid rgba(241, 245, 249, 0.9);
-      box-shadow: var(--shadow-float);
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .bot-card:hover {
-      transform: translateY(-6px);
-      box-shadow: var(--shadow-hover);
-    }
-
-    .bot-card.alert-border {
-      border: 1.5px solid #fecdd3;
-      background: linear-gradient(180deg, #fff5f6 0%, #ffffff 40%);
-    }
-
-    .card-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      margin-bottom: 20px;
-    }
-
-    .icon-and-name {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    /* Small soft rounded block for icons like in Schedule HQ */
-    .token-avatar {
-      width: 44px;
-      height: 44px;
-      border-radius: 14px;
-      background: #f1f5f9;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 20px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03);
-    }
-
-    .pair-title {
-      font-size: 16.5px;
-      font-weight: 800;
-      color: var(--text-main);
-      letter-spacing: -0.01em;
-    }
-
-    .pills-group {
-      display: flex;
-      gap: 6px;
-      margin-top: 4px;
-    }
-
-    .micro-pill {
-      font-size: 11px;
-      font-weight: 700;
-      padding: 2px 8px;
-      border-radius: 9999px;
-    }
-
-    .pill-short {
-      background: var(--red-bg);
-      color: var(--red-soft);
-    }
-
-    .pill-lev {
-      background: #f1f5f9;
-      color: #475569;
-    }
-
-    .verdict-tag {
-      font-size: 11px;
-      font-weight: 800;
-      padding: 5px 12px;
-      border-radius: 9999px;
-      letter-spacing: 0.03em;
-    }
-
-    .tag-strong {
-      background: var(--green-bg);
-      color: var(--green-soft);
-    }
-
-    .tag-moderate {
-      background: var(--orange-bg);
-      color: var(--orange-soft);
-    }
-
-    .tag-danger {
-      background: var(--red-bg);
-      color: var(--red-soft);
-    }
-
-    /* Floaty metrics inner tray */
-    .metrics-tray {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-      background: #f8fafc;
-      border-radius: 20px;
-      padding: 16px;
-      margin-bottom: 18px;
-    }
-
-    .metric-item {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .metric-title {
-      font-size: 11.5px;
-      font-weight: 600;
-      color: #94a3b8;
-      margin-bottom: 2px;
-    }
-
-    .metric-data {
-      font-size: 14.5px;
-      font-weight: 700;
-      font-family: 'JetBrains Mono', monospace;
-      color: var(--text-main);
-    }
-
-    .metric-data.pos { color: var(--green-soft); }
-    .metric-data.neg { color: var(--red-soft); }
-
-    .card-bottom {
-      border-top: 1px solid #f1f5f9;
-      padding-top: 14px;
-      display: flex;
-      justify-content: space-between;
-      font-size: 12.5px;
-      color: var(--text-muted);
-      font-weight: 500;
-    }
-
-    .card-bottom strong {
-      color: var(--text-main);
-    }
-  </style>
+  <!-- Link to the dedicated stylesheet -->
+  <link rel="stylesheet" href="style.css?v=2">
 </head>
 <body>
 
   <div class="container">
-    <!-- Schedule HQ Style Pill Navbar -->
+    <!-- Floating Schedule HQ-style Navigation -->
     <header class="top-nav">
       <div class="nav-brand">
-        <span class="brand-icon">TB</span>
+        <span class="brand-badge">HQ</span>
         <span>Guardian HQ</span>
       </div>
       <div class="nav-actions">
-        <a href="#rules" class="nav-link">Strategy</a>
-        <button class="btn-pill-primary" onclick="runAnalysis()">Launch Analysis ↗</button>
+        <a href="#dashboard" class="nav-link">Presets</a>
+        <button class="btn-nav-primary" onclick="runAnalysis()">Launch Sync ↗</button>
       </div>
     </header>
 
-    <!-- Hero Title Section -->
+    <!-- Centered Hero -->
     <section class="hero">
-      <div class="hero-badge">Deterministic Squeeze Architecture • Zero Latency</div>
-      <h1>Your capital shouldn’t fight the trend. <br><span class="gradient-text">The system shields it.</span></h1>
+      <div class="hero-pill">Deterministic Squeeze Architecture • Zero Latency</div>
+      <h1>Your capital shouldn’t fight the trend. <br><span class="gradient-accent">The system shields it.</span></h1>
       <p>Eliminates preset bot liquidation hazard by dynamically tracking 24h momentum against short grid boundaries with automated webhook execution.</p>
     </section>
 
-    <!-- Floating Interactive Controls -->
+    <!-- Controls Panel -->
     <section class="controls-panel">
-      <div class="input-grid">
+      <div class="input-row">
         <input type="text" id="apiKey" placeholder="Toobit API Key (Header: X-BB-APIKEY)" />
-        <input type="text" id="webhookUrl" placeholder="Discord or Relay Webhook URL" />
+        <input type="text" id="webhookUrl" placeholder="Discord or Webhook URL (POST JSON alerts)" />
       </div>
 
-      <div class="actions-flex">
-        <div style="display: flex; align-items: center; gap: 24px;">
+      <div class="actions-row">
+        <div style="display: flex; align-items: center; gap: 20px;">
           <button class="btn-sync" onclick="runAnalysis()">Sync Prices & Analyze</button>
 
           <label class="toggle-label">
             <input type="checkbox" id="autoAlertToggle" style="display: none;" />
-            <div class="switch-ui"></div>
+            <div class="switch-pill"></div>
             <span>Auto-Monitor (60s)</span>
           </label>
         </div>
 
-        <div style="font-size: 13.5px; color: var(--text-muted);">
-          Trigger Rule: Surge <strong>&gt; 5.00%</strong> dispatches alerts.
+        <div class="threshold-text">
+          Alert Rule: Surge <strong>&gt; 5.00%</strong> dispatches warnings.
         </div>
       </div>
 
-      <div class="status-row">
-        <span id="apiStatus">Awaiting trigger. Click 'Sync Prices & Analyze'.</span>
-        <span id="lastUpdated" style="font-family: 'JetBrains Mono', monospace;">Updated: Never</span>
+      <div class="status-bar">
+        <span id="apiStatus">System ready. Click 'Sync Prices & Analyze' to run.</span>
+        <span id="lastUpdated" style="font-family: 'JetBrains Mono', monospace;">-</span>
       </div>
     </section>
 
-    <!-- Bot Grid View -->
+    <!-- Bot Grid -->
     <main class="bot-grid" id="botGrid"></main>
   </div>
 
@@ -590,7 +132,7 @@
         const data = await res.json();
         return Array.isArray(data) ? data : (data.data || []);
       } catch (err) {
-        console.warn("API offline or direct call blocked:", err.message);
+        console.warn("API offline or blocked:", err.message);
         return null;
       }
     }
@@ -603,7 +145,7 @@
       status.textContent = 'Querying live contract books...';
 
       const liveTickers = await fetchLiveMetrics(apiKey);
-      status.textContent = liveTickers ? 'Live contract orderbooks synchronized.' : 'Evaluating with cached market profiles.';
+      status.textContent = liveTickers ? 'Live orderbooks synchronized.' : 'Evaluating with cached market profiles.';
       timestampElem.textContent = `Updated: ${new Date().toLocaleTimeString()}`;
 
       const evaluated = presetBots.map(bot => {
@@ -679,49 +221,49 @@
         card.innerHTML = `
           <div>
             <div class="card-top">
-              <div class="icon-and-name">
-                <div class="token-avatar">${bot.icon || '🪙'}</div>
+              <div class="token-info">
+                <div class="token-icon">${bot.icon || '🪙'}</div>
                 <div>
                   <h3 class="pair-title">${bot.displayName}</h3>
-                  <div class="pills-group">
-                    <span class="micro-pill pill-short">${bot.dir}</span>
-                    <span class="micro-pill pill-lev">${bot.lev}X</span>
+                  <div class="sub-pills">
+                    <span class="micro-badge badge-short">${bot.dir}</span>
+                    <span class="micro-badge badge-lev">${bot.lev}X</span>
                   </div>
                 </div>
               </div>
               <span class="verdict-tag ${bot.verdictClass}">${bot.verdict}</span>
             </div>
 
-            <div class="metrics-tray">
-              <div class="metric-item">
-                <span class="metric-title">7D Backtest APY</span>
-                <span class="metric-data pos">+${bot.apy.toFixed(2)}%</span>
+            <div class="metrics-box">
+              <div class="metric-col">
+                <span class="metric-lbl">7D Backtest APY</span>
+                <span class="metric-val pos">+${bot.apy.toFixed(2)}%</span>
               </div>
-              <div class="metric-item">
-                <span class="metric-title">Grid Spread</span>
-                <span class="metric-data">${bot.gridProfit}%</span>
+              <div class="metric-col">
+                <span class="metric-lbl">Grid Spread</span>
+                <span class="metric-val">${bot.gridProfit}%</span>
               </div>
-              <div class="metric-item">
-                <span class="metric-title">Last Price</span>
-                <span class="metric-data">${priceDisplay}</span>
+              <div class="metric-col">
+                <span class="metric-lbl">Last Price</span>
+                <span class="metric-val">${priceDisplay}</span>
               </div>
-              <div class="metric-item">
-                <span class="metric-title">24h Change</span>
-                <span class="metric-data ${changeClass}">${changeSign}${bot.liveChange.toFixed(2)}%</span>
+              <div class="metric-col">
+                <span class="metric-lbl">24h Change</span>
+                <span class="metric-val ${changeClass}">${changeSign}${bot.liveChange.toFixed(2)}%</span>
               </div>
-              <div class="metric-item">
-                <span class="metric-title">Est. Liq Price</span>
-                <span class="metric-data neg">${liqDisplay}</span>
+              <div class="metric-col">
+                <span class="metric-lbl">Est. Liq Price</span>
+                <span class="metric-val neg">${liqDisplay}</span>
               </div>
-              <div class="metric-item">
-                <span class="metric-title">Cycle Time</span>
-                <span class="metric-data">${bot.cycle} Days</span>
+              <div class="metric-col">
+                <span class="metric-lbl">Cycle Time</span>
+                <span class="metric-val">${bot.cycle} Days</span>
               </div>
             </div>
           </div>
 
-          <div class="card-bottom">
-            <span>Suitability: <strong>${bot.rawScore.toFixed(2)}</strong></span>
+          <div class="card-foot">
+            <span>Score: <strong>${bot.rawScore.toFixed(2)}</strong></span>
             <span>Spread: <strong>${bot.gridProfit >= 1.0 ? 'Optimal' : 'Tight'}</strong></span>
           </div>
         `;
