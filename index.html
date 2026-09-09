@@ -4,247 +4,488 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Toobit Preset Bot Ranker & Squeeze Guardian</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+  
   <style>
     :root {
-      --bg: #090d13;
-      --panel: #151b23;
-      --card: #1c2430;
-      --border: #30363d;
-      --text: #c9d1d9;
-      --text-bright: #ffffff;
-      --muted: #8b949e;
-      --accent: #58a6ff;
-      --green: #238636;
-      --green-text: #3fb950;
-      --red: #da3633;
-      --red-text: #f85149;
-      --orange-text: #e3b341;
+      /* Modern Sleek Light Palette */
+      --bg: #f8fafc;
+      --surface: #ffffff;
+      --surface-subtle: #f1f5f9;
+      --border: #e2e8f0;
+      --border-focus: #3b82f6;
+
+      --text-main: #0f172a;
+      --text-secondary: #475569;
+      --text-muted: #94a3b8;
+
+      --primary: #0f172a;
+      --primary-hover: #1e293b;
+      
+      --accent-blue: #2563eb;
+      --accent-blue-subtle: #eff6ff;
+
+      /* Semantic Alert Colors */
+      --green: #059669;
+      --green-bg: #ecfdf5;
+      --green-border: #a7f3d0;
+
+      --amber: #d97706;
+      --amber-bg: #fffbeb;
+      --amber-border: #fde68a;
+
+      --red: #e11d48;
+      --red-bg: #fff1f2;
+      --red-border: #fecdd3;
+
+      /* Elevation / Float Shadows */
+      --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+      --shadow-float: 0 10px 30px -4px rgba(15, 23, 42, 0.06), 0 4px 10px -3px rgba(15, 23, 42, 0.04);
+      --shadow-float-hover: 0 20px 40px -6px rgba(15, 23, 42, 0.12), 0 8px 16px -4px rgba(15, 23, 42, 0.06);
     }
-    * { box-sizing: border-box; }
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-      background: var(--bg);
-      color: var(--text);
+
+    * { 
+      box-sizing: border-box; 
       margin: 0;
-      padding: 24px;
+      padding: 0;
     }
+
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--bg);
+      color: var(--text-main);
+      padding: 40px 24px;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
     .container {
-      max-width: 1280px;
+      max-width: 1320px;
       margin: 0 auto;
     }
+
+    /* Header Section */
     .header {
-      margin-bottom: 20px;
-    }
-    .header h1 {
-      margin: 0 0 6px 0;
-      font-size: 24px;
-      color: var(--text-bright);
-    }
-    .header p {
-      margin: 0;
-      font-size: 14px;
-      color: var(--muted);
-    }
-    .controls {
-      background: var(--panel);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 16px;
+      margin-bottom: 32px;
       display: flex;
       flex-direction: column;
-      gap: 12px;
-      margin-bottom: 24px;
+      gap: 6px;
     }
+
+    .header-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--accent-blue-subtle);
+      color: var(--accent-blue);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: 9999px;
+      width: fit-content;
+      margin-bottom: 4px;
+    }
+
+    .header-badge::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent-blue);
+    }
+
+    .header h1 {
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--text-main);
+      letter-spacing: -0.02em;
+    }
+
+    .header p {
+      font-size: 15px;
+      color: var(--text-secondary);
+      max-width: 700px;
+      line-height: 1.5;
+    }
+
+    /* Floating Controls Card */
+    .controls {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      margin-bottom: 36px;
+      box-shadow: var(--shadow-float);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
     .input-row {
       display: flex;
-      gap: 12px;
+      gap: 16px;
       flex-wrap: wrap;
     }
-    input[type="text"] {
+
+    .input-group {
       flex: 1;
-      min-width: 260px;
-      background: #0d1117;
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      padding: 10px 12px;
-      color: var(--text-bright);
-      font-family: monospace;
-      font-size: 13px;
+      min-width: 280px;
     }
+
+    input[type="text"] {
+      width: 100%;
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px 16px;
+      color: var(--text-main);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
     input[type="text"]:focus {
       outline: none;
-      border-color: var(--accent);
+      background: #ffffff;
+      border-color: var(--border-focus);
+      box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
     }
+
+    input[type="text"]::placeholder {
+      color: var(--text-muted);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    .actions-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+      padding-top: 4px;
+    }
+
     .btn-group {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 20px;
     }
+
     button {
-      background: var(--green);
-      color: #fff;
+      background: var(--primary);
+      color: #ffffff;
       border: none;
-      padding: 10px 20px;
-      border-radius: 6px;
+      padding: 11px 22px;
+      border-radius: 10px;
       cursor: pointer;
       font-weight: 600;
       font-size: 14px;
+      box-shadow: 0 4px 12px rgba(15, 23, 42, 0.15);
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
     }
+
     button:hover {
-      background: #2ea043;
+      background: var(--primary-hover);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 16px rgba(15, 23, 42, 0.2);
     }
+
+    button:active {
+      transform: translateY(0);
+    }
+
+    /* Custom Minimal Toggle Switch */
     .toggle-label {
       display: flex;
       align-items: center;
-      gap: 6px;
-      font-size: 13px;
-      color: var(--text-bright);
+      gap: 10px;
+      font-size: 13.5px;
+      font-weight: 600;
+      color: var(--text-secondary);
       cursor: pointer;
       user-select: none;
     }
+
+    .toggle-switch {
+      position: relative;
+      display: inline-block;
+      width: 40px;
+      height: 22px;
+    }
+
+    .toggle-switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      inset: 0;
+      background-color: var(--border);
+      border-radius: 9999px;
+      transition: .2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 16px;
+      width: 16px;
+      left: 3px;
+      bottom: 3px;
+      background-color: white;
+      border-radius: 50%;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+      transition: .2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    input:checked + .slider {
+      background-color: var(--accent-blue);
+    }
+
+    input:checked + .slider:before {
+      transform: translateX(18px);
+    }
+
+    .threshold-indicator {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .threshold-indicator strong {
+      color: var(--text-secondary);
+    }
+
     .status-bar {
-      font-size: 12px;
-      color: var(--muted);
-      border-top: 1px solid rgba(48, 54, 61, 0.5);
-      padding-top: 10px;
+      font-size: 12.5px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      border-top: 1px solid var(--border);
+      padding-top: 16px;
       display: flex;
       justify-content: space-between;
+      align-items: center;
     }
+
+    /* Grid layout */
     .bot-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
-      gap: 16px;
+      grid-template-columns: repeat(auto-fill, minmax(370px, 1fr));
+      gap: 24px;
     }
+
+    /* Card Component */
     .card {
-      background: var(--card);
+      background: var(--surface);
       border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 16px;
+      border-radius: 16px;
+      padding: 20px 22px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
+      box-shadow: var(--shadow-float);
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
       position: relative;
     }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-float-hover);
+      border-color: #cbd5e1;
+    }
+
     .card.alert-border {
       border-color: var(--red);
-      box-shadow: 0 0 8px rgba(218, 54, 51, 0.4);
+      background: linear-gradient(180deg, #fff5f5 0%, #ffffff 40%);
+      box-shadow: 0 10px 25px -4px rgba(225, 29, 72, 0.12);
     }
+
     .card-head {
       display: flex;
       justify-content: space-between;
       align-items: flex-start;
-      margin-bottom: 12px;
+      margin-bottom: 16px;
+      gap: 12px;
     }
+
     .pair-name {
-      margin: 0;
       font-size: 17px;
-      font-weight: 700;
-      color: var(--text-bright);
+      font-weight: 800;
+      color: var(--text-main);
+      letter-spacing: -0.01em;
     }
+
     .sub-badges {
       display: flex;
       gap: 6px;
-      margin-top: 4px;
+      margin-top: 6px;
       align-items: center;
     }
+
     .badge {
       font-size: 11px;
       font-weight: 700;
-      padding: 2px 6px;
-      border-radius: 4px;
+      padding: 3px 8px;
+      border-radius: 6px;
+      letter-spacing: 0.02em;
     }
+
     .badge-short {
-      background: rgba(248, 81, 73, 0.15);
-      color: var(--red-text);
+      background: var(--red-bg);
+      color: var(--red);
+      border: 1px solid var(--red-border);
     }
+
     .badge-lev {
-      background: rgba(227, 179, 65, 0.15);
-      color: var(--orange-text);
+      background: #f1f5f9;
+      color: #334155;
+      border: 1px solid var(--border);
     }
+
+    .badge-type {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-left: 2px;
+    }
+
     .verdict-tag {
       font-size: 11px;
-      font-weight: 700;
-      padding: 4px 8px;
-      border-radius: 4px;
+      font-weight: 800;
+      padding: 4px 10px;
+      border-radius: 8px;
       text-transform: uppercase;
-      letter-spacing: 0.5px;
+      letter-spacing: 0.04em;
+      white-space: nowrap;
     }
+
     .tag-strong {
-      background: rgba(46, 160, 67, 0.2);
-      color: var(--green-text);
-      border: 1px solid var(--green);
+      background: var(--green-bg);
+      color: var(--green);
+      border: 1px solid var(--green-border);
     }
+
     .tag-moderate {
-      background: rgba(227, 179, 65, 0.2);
-      color: var(--orange-text);
-      border: 1px solid var(--orange-text);
+      background: var(--amber-bg);
+      color: var(--amber);
+      border: 1px solid var(--amber-border);
     }
+
     .tag-danger {
-      background: rgba(248, 81, 73, 0.2);
-      color: var(--red-text);
-      border: 1px solid var(--red);
+      background: var(--red-bg);
+      color: var(--red);
+      border: 1px solid var(--red-border);
+      animation: pulse 2s infinite ease-in-out;
     }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.7; }
+    }
+
+    /* Elevated Inner Metrics */
     .metrics-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 8px;
-      background: #11161d;
-      padding: 12px;
-      border-radius: 6px;
-      margin-bottom: 12px;
+      gap: 12px;
+      background: var(--surface-subtle);
+      border: 1px solid rgba(226, 232, 240, 0.7);
+      padding: 14px 16px;
+      border-radius: 12px;
+      margin-bottom: 16px;
     }
+
     .metric-col {
       display: flex;
       flex-direction: column;
     }
+
     .metric-label {
       font-size: 11px;
-      color: var(--muted);
-      margin-bottom: 2px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      margin-bottom: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
     }
+
     .metric-value {
       font-size: 14px;
       font-weight: 700;
-      color: var(--text-bright);
+      color: var(--text-main);
+      font-family: 'JetBrains Mono', monospace;
     }
-    .metric-value.positive { color: var(--green-text); }
-    .metric-value.negative { color: var(--red-text); }
+
+    .metric-value.positive { color: var(--green); }
+    .metric-value.negative { color: var(--red); }
+
     .card-footer {
       border-top: 1px solid var(--border);
-      padding-top: 10px;
+      padding-top: 14px;
       display: flex;
       justify-content: space-between;
-      font-size: 12px;
-      color: var(--muted);
+      font-size: 12.5px;
+      font-weight: 500;
+      color: var(--text-secondary);
+    }
+
+    .card-footer strong {
+      color: var(--text-main);
     }
   </style>
 </head>
 <body>
   <div class="container">
     <div class="header">
+      <div class="header-badge">Live Intelligence</div>
       <h1>Toobit Futures Preset Bot Screener</h1>
-      <p>Tracks live 24h market momentum against Toobit's app bot presets and dispatches webhook alerts during short-squeeze risks.</p>
+      <p>Continuous algorithmic monitoring of Toobit preset bots with real-time momentum divergence and automated squeeze protection.</p>
     </div>
 
     <div class="controls">
       <div class="input-row">
-        <input type="text" id="apiKey" placeholder="Toobit API Key (Header: X-BB-APIKEY)" />
-        <input type="text" id="webhookUrl" placeholder="Discord or Webhook Relay URL (POST JSON alerts)" />
+        <div class="input-group">
+          <input type="text" id="apiKey" placeholder="Toobit API Key (Header: X-BB-APIKEY)" />
+        </div>
+        <div class="input-group">
+          <input type="text" id="webhookUrl" placeholder="Discord or Webhook URL (POST JSON alerts)" />
+        </div>
       </div>
-      <div class="input-row" style="align-items: center; justify-content: space-between;">
+      
+      <div class="actions-bar">
         <div class="btn-group">
-          <button onclick="runAnalysis()">Sync Prices & Analyze</button>
+          <button onclick="runAnalysis()">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
+            Sync Prices & Analyze
+          </button>
+          
           <label class="toggle-label">
-            <input type="checkbox" id="autoAlertToggle" /> Auto-Monitor (60s loop)
+            <div class="toggle-switch">
+              <input type="checkbox" id="autoAlertToggle" />
+              <span class="slider"></span>
+            </div>
+            Auto-Monitor (60s)
           </label>
         </div>
-        <div style="font-size: 12px; color: var(--muted);">
-          Thresholds: <strong>Surge &gt; 5%</strong> triggers Discord/Webhook dispatch.
+
+        <div class="threshold-indicator">
+          Alert Rule: Surge <strong>&gt; 5%</strong> dispatches liquidation warnings.
         </div>
       </div>
+
       <div class="status-bar">
-        <span id="apiStatus">Idle. Click 'Sync Prices & Analyze' to run.</span>
-        <span id="lastUpdated">-</span>
+        <span id="apiStatus">System ready. Click 'Sync Prices & Analyze' to run.</span>
+        <span id="lastUpdated" style="font-family: 'JetBrains Mono', monospace; font-size: 12px;">-</span>
       </div>
     </div>
 
@@ -279,9 +520,7 @@
 
       const now = Date.now();
       const lastAlert = alertCooldowns.get(bot.symbol) || 0;
-      if (now - lastAlert < 10 * 60 * 1000) {
-        return;
-      }
+      if (now - lastAlert < 10 * 60 * 1000) return;
 
       const payload = {
         username: "Toobit Squeeze Guardian",
@@ -289,7 +528,7 @@
         embeds: [
           {
             title: `Position Risk Alert: ${bot.symbol}`,
-            color: 14297139,
+            color: 14752072,
             fields: [
               { name: "Trigger Reason", value: reason, inline: false },
               { name: "24h Price Change", value: `${bot.liveChange > 0 ? '+' : ''}${bot.liveChange.toFixed(2)}%`, inline: true },
@@ -313,9 +552,6 @@
 
         if (res.ok) {
           alertCooldowns.set(bot.symbol, now);
-          console.log(`Alert sent for ${bot.symbol}`);
-        } else {
-          console.warn(`Webhook failed with status: ${res.status}`);
         }
       } catch (err) {
         console.error("Webhook network error:", err);
@@ -345,7 +581,7 @@
       status.textContent = 'Querying live contract books...';
 
       const liveTickers = await fetchLiveMetrics(apiKey);
-      status.textContent = liveTickers ? 'Live tickers active.' : 'Evaluating with offline/cached profiles.';
+      status.textContent = liveTickers ? 'Live tickers connected and synchronized.' : 'Evaluating with cached market profiles.';
       timestampElem.textContent = `Updated: ${new Date().toLocaleTimeString()}`;
 
       const evaluated = presetBots.map(bot => {
@@ -364,15 +600,12 @@
             liveChange = parseFloat(match.priceChangePercent || 0);
             const rawPrice = parseFloat(match.lastPrice || match.close || 0);
             lastPrice = rawPrice;
-            // Short liquidation price approximation: Entry * (1 + 1/Leverage - MMR ~0.005)
             estLiq = (rawPrice * (1 + (1 / bot.lev) - 0.005)).toFixed(4);
           }
         }
 
-        // Base quantitative scoring
         let rawScore = (bot.apy * bot.gridProfit) / (bot.lev * Math.sqrt(bot.cycle));
 
-        // Penalty if coin is pumping against the short position
         if (liveChange > 3.0) {
           rawScore *= 0.5;
         }
@@ -381,7 +614,6 @@
         let verdictClass = "tag-moderate";
         let alertState = false;
 
-        // Danger detection
         if (bot.lev >= 10 && liveChange >= 5.0) {
           verdict = "SQUEEZE DANGER";
           verdictClass = "tag-danger";
@@ -433,7 +665,7 @@
                 <div class="sub-badges">
                   <span class="badge badge-short">${bot.dir}</span>
                   <span class="badge badge-lev">${bot.lev}X</span>
-                  <span style="font-size: 11px; color: var(--muted);">${bot.type}</span>
+                  <span class="badge-type">${bot.type}</span>
                 </div>
               </div>
               <span class="verdict-tag ${bot.verdictClass}">${bot.verdict}</span>
@@ -441,7 +673,7 @@
 
             <div class="metrics-grid">
               <div class="metric-col">
-                <span class="metric-label">7D Backtested APY</span>
+                <span class="metric-label">7D Backtest APY</span>
                 <span class="metric-value positive">+${bot.apy.toFixed(2)}%</span>
               </div>
               <div class="metric-col">
@@ -457,19 +689,19 @@
                 <span class="metric-value ${changeClass}">${changeSign}${bot.liveChange.toFixed(2)}%</span>
               </div>
               <div class="metric-col">
-                <span class="metric-label">Est. Liq Price (Short)</span>
+                <span class="metric-label">Est. Liq Price</span>
                 <span class="metric-value negative">${liqDisplay}</span>
               </div>
               <div class="metric-col">
-                <span class="metric-label">Rec. Cycle</span>
+                <span class="metric-label">Cycle Time</span>
                 <span class="metric-value">${bot.cycle} Days</span>
               </div>
             </div>
           </div>
 
           <div class="card-footer">
-            <span>Suitability Score: <strong>${bot.rawScore.toFixed(2)}</strong></span>
-            <span>Spread Coverage: ${bot.gridProfit >= 1.0 ? 'Strong' : 'Marginal'}</span>
+            <span>Score: <strong>${bot.rawScore.toFixed(2)}</strong></span>
+            <span>Coverage: <strong>${bot.gridProfit >= 1.0 ? 'Optimal' : 'Tight'}</strong></span>
           </div>
         `;
         grid.appendChild(card);
